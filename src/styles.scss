@@ -1,1 +1,75 @@
-/* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+:root {
+  --rail-navy: #0A192F;
+  --rail-navy-light: #112240;
+  --rail-navy-lighter: #233554;
+  --rail-orange: #FF6B00;
+  --rail-orange-hover: #E65C00;
+  --rail-gray-text: #8892B0;
+  --rail-light-bg: #F3F4F6;
+  --rail-white: #FFFFFF;
+  --rail-border: rgba(255, 255, 255, 0.1);
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.3);
+  --box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', 'Outfit', Roboto, "Helvetica Neue", sans-serif;
+  background-color: var(--rail-light-bg);
+  color: #333;
+}
+
+html, body {
+  height: 100%;
+}
+
+.page-container {
+  padding: 24px;
+}
+
+/* Glassmorphism Utilities */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  box-shadow: var(--box-shadow);
+  padding: 24px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.15);
+}
+
+.card-title {
+  font-weight: 600;
+  font-size: 1.25rem;
+  margin-bottom: 20px;
+  color: var(--rail-navy);
+}
+
+.full-width {
+  width: 100%;
+}
+
+/* Scrollbar customization */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--rail-light-bg); 
+}
+::-webkit-scrollbar-thumb {
+  background: var(--rail-gray-text); 
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--rail-navy-light); 
+}

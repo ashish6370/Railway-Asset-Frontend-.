@@ -1,0 +1,127 @@
+<div class="public-asset-container railway-theme">
+  <!-- Loading State -->
+  <div class="loading-state" *ngIf="loading">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Loading Asset Details...</p>
+  </div>
+
+  <!-- Error State (404 Not Found) -->
+  <div class="error-state" *ngIf="error && !loading">
+    <mat-icon color="warn">error_outline</mat-icon>
+    <h2>Asset Not Found</h2>
+    <p>The asset you are looking for does not exist or the ID is invalid.</p>
+  </div>
+
+  <!-- Asset Details Layout -->
+  <div class="asset-details" *ngIf="!loading && !error && asset">
+    
+    <!-- Railway Theme Header Line -->
+    <div class="railway-header-strip"></div>
+
+    <mat-card class="main-card">
+      
+      <!-- Section 1: Asset Header -->
+      <div class="asset-header">
+        <div class="asset-icon-wrapper">
+          <mat-icon>devices</mat-icon>
+        </div>
+        <div class="asset-title-area">
+          <div class="title-row">
+            <h1>{{ asset.assetName }}</h1>
+            <mat-chip-set>
+              <mat-chip [color]="getStatusColor(asset.status)" highlighted>{{ asset.status | uppercase }}</mat-chip>
+            </mat-chip-set>
+          </div>
+          <p class="asset-code">Code: <strong>{{ asset.assetCode }}</strong></p>
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <mat-card-content class="sections-container">
+        <!-- Section 2: Basic Information -->
+        <div class="info-section">
+          <h3><mat-icon>info</mat-icon> Basic Information</h3>
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="label">Asset ID</span>
+              <span class="value">{{ asset.assetId }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Asset Name</span>
+              <span class="value">{{ asset.assetName }}</span>
+            </div>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <!-- Section 3: Department Information -->
+        <div class="info-section">
+          <h3><mat-icon>business</mat-icon> Department Information</h3>
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="label">Department</span>
+              <span class="value">{{ asset.department || 'N/A' }}</span>
+            </div>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <!-- Section 4: Location Information -->
+        <div class="info-section">
+          <h3><mat-icon>location_on</mat-icon> Location Information</h3>
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="label">Current Location</span>
+              <span class="value">{{ asset.location || 'N/A' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Purchase Location</span>
+              <span class="value">{{ asset.purchaseLocation || 'N/A' }}</span>
+            </div>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <!-- Section 5: Purchase Information -->
+        <div class="info-section">
+          <h3><mat-icon>shopping_cart</mat-icon> Purchase & Warranty</h3>
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="label">Purchase Date</span>
+              <span class="value">{{ asset.purchaseDate | date:'mediumDate' || 'N/A' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Warranty Expiry</span>
+              <span class="value">{{ asset.warrantyExpiryDate | date:'mediumDate' || 'N/A' }}</span>
+            </div>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <!-- Section 6: QR Information -->
+        <div class="info-section qr-section">
+          <h3><mat-icon>qr_code_2</mat-icon> QR Information</h3>
+          <div class="qr-container" *ngIf="asset.qrCodePath">
+            <img [src]="getQrCodeUrl()" alt="Asset QR Code" class="qr-image" />
+            <p>Scan to verify asset tracking information.</p>
+          </div>
+          <div *ngIf="!asset.qrCodePath">
+            <p>No QR Code generated for this asset.</p>
+          </div>
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Footer -->
+    <div class="public-footer">
+      <mat-icon>verified</mat-icon>
+      <span>Verified by AssetVault System</span>
+    </div>
+  </div>
+</div>
