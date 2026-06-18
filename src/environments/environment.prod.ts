@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://railway-asset-management-system-production.up.railway.app/api',
+  apiUrl: '/api',
   hostUrl: 'https://railway-asset-management-system-production.up.railway.app'
 };
