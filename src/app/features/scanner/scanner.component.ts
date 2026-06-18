@@ -122,7 +122,16 @@ export class ScannerComponent implements OnInit {
   onScanSuccess(result: string): void {
     if (result && result.trim().length > 0) {
       console.log('Scanned QR:', result);
-      const assetId = parseInt(result, 10);
+      
+      let assetIdStr = result.trim();
+      
+      // If it's a URL (e.g. http://localhost:4200/public/assets/12), extract the last part
+      if (assetIdStr.includes('/public/assets/')) {
+        const parts = assetIdStr.split('/public/assets/');
+        assetIdStr = parts[parts.length - 1];
+      }
+
+      const assetId = parseInt(assetIdStr, 10);
       
       if (!isNaN(assetId)) {
         this.scannerEnabled = false; // Stop camera before routing

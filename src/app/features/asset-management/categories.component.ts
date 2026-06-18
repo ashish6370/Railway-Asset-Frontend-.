@@ -93,11 +93,24 @@ export class CategoriesComponent implements OnInit {
           },
           error: (err) => {
             console.error('Error adding category:', err);
-            alert('Failed to add category. It may already exist.');
+            alert(this.getCategoryErrorMessage(err));
           }
         });
       }
     });
+  }
+
+  private getCategoryErrorMessage(err: any): string {
+    const backendMessage = err?.error?.error || err?.error?.message || err?.message;
+    if (backendMessage) {
+      return backendMessage;
+    }
+
+    if (err?.status === 0) {
+      return 'Cannot connect to the backend. Please check that the server is running.';
+    }
+
+    return 'Failed to add category. Please try again.';
   }
 }
 
