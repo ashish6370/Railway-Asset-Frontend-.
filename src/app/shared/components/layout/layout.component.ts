@@ -24,26 +24,26 @@ import { AuthService } from '../../../core/services/auth.service';
         
         <mat-nav-list class="nav-list">
           <div class="nav-section-title">MAIN</div>
-          <a mat-list-item routerLink="/dashboard" routerLinkActive="active-link"><mat-icon>dashboard</mat-icon> Dashboard</a>
+          <a mat-list-item routerLink="/dashboard" routerLinkActive="active-link" (click)="navigate('/dashboard')"><mat-icon>dashboard</mat-icon> Dashboard</a>
           
           <div class="nav-section-title">ORGANIZATION</div>
-          <a mat-list-item routerLink="/divisions" routerLinkActive="active-link"><mat-icon>domain</mat-icon> Divisions</a>
-          <a mat-list-item routerLink="/departments" routerLinkActive="active-link"><mat-icon>category</mat-icon> Departments</a>
-          <a mat-list-item routerLink="/employees" routerLinkActive="active-link"><mat-icon>badge</mat-icon> Employees</a>
+          <a mat-list-item routerLink="/divisions" routerLinkActive="active-link" (click)="navigate('/divisions')"><mat-icon>domain</mat-icon> Divisions</a>
+          <a mat-list-item routerLink="/departments" routerLinkActive="active-link" (click)="navigate('/departments')"><mat-icon>category</mat-icon> Departments</a>
+          <a mat-list-item routerLink="/employees" routerLinkActive="active-link" (click)="navigate('/employees')"><mat-icon>badge</mat-icon> Employees</a>
           
           <div class="nav-section-title">OPERATIONS</div>
-          <a mat-list-item routerLink="/categories" routerLinkActive="active-link"><mat-icon>category</mat-icon> Categories</a>
-          <a mat-list-item routerLink="/assets" routerLinkActive="active-link"><mat-icon>inventory_2</mat-icon> Assets</a>
-          <a mat-list-item routerLink="/scanner" routerLinkActive="active-link"><mat-icon>qr_code_scanner</mat-icon> QR Scanner</a>
-          <a mat-list-item routerLink="/assignments" routerLinkActive="active-link"><mat-icon>assignment_ind</mat-icon> Assignments</a>
-          <a mat-list-item routerLink="/my-requests" routerLinkActive="active-link"><mat-icon>receipt_long</mat-icon> My Requests</a>
-          <a mat-list-item routerLink="/approvals" routerLinkActive="active-link"><mat-icon>fact_check</mat-icon> Approvals Hub</a>
+          <a mat-list-item routerLink="/categories" routerLinkActive="active-link" (click)="navigate('/categories')"><mat-icon>category</mat-icon> Categories</a>
+          <a mat-list-item routerLink="/assets" routerLinkActive="active-link" (click)="navigate('/assets')"><mat-icon>inventory_2</mat-icon> Assets</a>
+          <a mat-list-item routerLink="/scanner" routerLinkActive="active-link" (click)="navigate('/scanner')"><mat-icon>qr_code_scanner</mat-icon> QR Scanner</a>
+          <a mat-list-item routerLink="/assignments" routerLinkActive="active-link" (click)="navigate('/assignments')"><mat-icon>assignment_ind</mat-icon> Assignments</a>
+          <a mat-list-item routerLink="/my-requests" routerLinkActive="active-link" (click)="navigate('/my-requests')"><mat-icon>receipt_long</mat-icon> My Requests</a>
+          <a mat-list-item routerLink="/approvals" routerLinkActive="active-link" (click)="navigate('/approvals')"><mat-icon>fact_check</mat-icon> Approvals Hub</a>
           
           <div class="nav-section-title">COMPLIANCE</div>
-          <a mat-list-item routerLink="/audits" routerLinkActive="active-link"><mat-icon>security</mat-icon> Audits</a>
-          <a mat-list-item routerLink="/analytics" routerLinkActive="active-link"><mat-icon>analytics</mat-icon> Analytics</a>
-          <a mat-list-item routerLink="/reports" routerLinkActive="active-link"><mat-icon>summarize</mat-icon> Reports / Export</a>
-          <a mat-list-item routerLink="/settings" routerLinkActive="active-link"><mat-icon>settings</mat-icon> Settings</a>
+          <a mat-list-item routerLink="/audits" routerLinkActive="active-link" (click)="navigate('/audits')"><mat-icon>security</mat-icon> Audits</a>
+          <a mat-list-item routerLink="/analytics" routerLinkActive="active-link" (click)="navigate('/analytics')"><mat-icon>analytics</mat-icon> Analytics</a>
+          <a mat-list-item routerLink="/reports" routerLinkActive="active-link" (click)="navigate('/reports')"><mat-icon>summarize</mat-icon> Reports / Export</a>
+          <a mat-list-item routerLink="/settings" routerLinkActive="active-link" (click)="navigate('/settings')"><mat-icon>settings</mat-icon> Settings</a>
         </mat-nav-list>
       </mat-sidenav>
       
@@ -287,6 +287,10 @@ import { AuthService } from '../../../core/services/auth.service';
 })
 export class LayoutComponent {
   constructor(private auth: AuthService, private router: Router) {}
+
+  navigate(path: string) {
+    this.router.navigateByUrl(path);
+  }
   
   logout() { 
     this.auth.logout(); 
