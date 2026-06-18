@@ -205,7 +205,7 @@ function expiryAfterPurchaseValidator(group: AbstractControl): ValidationErrors 
             <mat-label>Assigned Employee (Optional)</mat-label>
             <mat-select formControlName="assignedUserId">
               <mat-option [value]="null">-- None --</mat-option>
-              <mat-option *ngFor="let emp of employees" [value]="emp.id">{{ emp.firstName }} {{ emp.lastName }}</mat-option>
+              <mat-option *ngFor="let emp of employees" [value]="emp.id">{{ emp.name }}</mat-option>
             </mat-select>
             <mat-icon matPrefix>badge</mat-icon>
           </mat-form-field>
