@@ -81,7 +81,14 @@ export class ApiService {
 
   // --- Assignments ---
   getAssignments(): Observable<any[]> { return this.http.get<any[]>(`${this.baseUrl}/assignments`); }
-  getAssetAssignments(assetId: number): Observable<any[]> { return this.http.get<any[]>(`${this.baseUrl}/assignments/asset/` + assetId); }
+  getAssetAssignments(id: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/assignments/asset/${id}`);
+  }
+
+  getAssetPassport(id: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/assets/${id}/passport`);
+  }
+
   assignAsset(data: any): Observable<any> { return this.http.post(`${this.baseUrl}/assignments/assign`, data); }
   returnAsset(id: number): Observable<any> { return this.http.post(`${this.baseUrl}/assignments/${id}/return`, {}); }
 

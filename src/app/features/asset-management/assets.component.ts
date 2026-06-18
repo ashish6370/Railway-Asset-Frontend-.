@@ -146,6 +146,10 @@ export class AssetsComponent implements OnInit {
           next: () => {
             // Refresh table
             this.loadAssets(0, 10);
+          },
+          error: (err) => {
+            const message = err?.error?.error || err?.error?.message || err?.message || 'Failed to save asset.';
+            alert(message);
           }
         });
       }

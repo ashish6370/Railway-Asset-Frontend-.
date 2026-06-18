@@ -74,8 +74,10 @@ function expiryAfterPurchaseValidator(group: AbstractControl): ValidationErrors 
 
         <div class="form-row">
           <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Asset Category*</mat-label>
+            <mat-label>Asset Category</mat-label>
             <mat-select formControlName="categoryId">
+              <mat-option [value]="null">-- No category --</mat-option>
+              <mat-option *ngIf="categories.length === 0" disabled>No categories found</mat-option>
               <mat-option *ngFor="let cat of categories" [value]="cat.id">{{ cat.name }}</mat-option>
             </mat-select>
             <mat-icon matPrefix>category</mat-icon>
@@ -301,7 +303,7 @@ export class AssetDialogComponent implements OnInit {
     this.assetForm = this.fb.group({
       name: ['', Validators.required],
       serialNumber: ['', Validators.required],
-      categoryId: ['', Validators.required],
+      categoryId: [null],
       brand: [''],
       model: [''],
       purchaseCost: [''],

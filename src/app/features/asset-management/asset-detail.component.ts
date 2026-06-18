@@ -121,6 +121,42 @@ import { AssignDialogComponent } from './assign-dialog.component';
               </div>
             </mat-tab>
 
+            <mat-tab label="Digital Passport">
+              <div class="tab-content" *ngIf="passport">
+                <div class="action-bar" style="display: flex; justify-content: space-between; align-items: center;">
+                  <h3 class="section-title" style="margin: 0;">
+                    <mat-icon>health_and_safety</mat-icon> Health Score: 
+                    <span [style.color]="passport.healthScorePercentage > 70 ? '#166534' : (passport.healthScorePercentage > 40 ? '#b45309' : '#991b1b')">
+                      {{passport.healthScorePercentage | number:'1.0-0'}}%
+                    </span>
+                  </h3>
+                  <button mat-flat-button class="action-btn" (click)="downloadPassportPdf()">
+                    <mat-icon>picture_as_pdf</mat-icon> Download PDF
+                  </button>
+                </div>
+                
+                <div class="timeline-container" style="margin-top: 20px; position: relative; padding-left: 20px; border-left: 2px solid #e2e8f0;">
+                  <div class="timeline-item" *ngFor="let event of passport.timeline" style="margin-bottom: 20px; position: relative;">
+                    <div class="timeline-dot" style="position: absolute; left: -27px; top: 0; width: 12px; height: 12px; border-radius: 50%; background: var(--rail-orange); border: 3px solid white; box-shadow: 0 0 0 1px var(--rail-orange);"></div>
+                    <div class="timeline-date" style="font-size: 12px; color: #64748b; font-weight: 600;">{{ event.date | date:'medium' }}</div>
+                    <div class="timeline-content" style="background: #f8fafc; padding: 12px; border-radius: 8px; margin-top: 5px; border: 1px solid #e2e8f0;">
+                      <div style="display: flex; justify-content: space-between;">
+                        <strong style="color: var(--rail-navy);">{{ event.type }}</strong>
+                        <span class="status-badge" [ngClass]="(event.status || 'UNKNOWN').toLowerCase()">{{ event.status || 'UNKNOWN' }}</span>
+                      </div>
+                      <p style="margin: 5px 0 0; font-size: 14px; color: #334155;">{{ event.description }}</p>
+                      <small style="color: #94a3b8; display: block; margin-top: 5px;">Performed by: {{ event.performedBy }}</small>
+                    </div>
+                  </div>
+                  <div *ngIf="!passport.timeline || passport.timeline.length === 0" style="color: #94a3b8; font-style: italic;">No historical events recorded yet.</div>
+                </div>
+              </div>
+              <div class="tab-content" *ngIf="!passport">
+                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+              </div>
+            </mat-tab>
+
+
           </mat-tab-group>
         </mat-card>
       </div>
@@ -301,6 +337,7 @@ export class AssetDetailComponent implements OnInit {
   asset: any;
   assignments: any[] = [];
   maintenance: any[] = [];
+  passport: any;
   isProcessingQr = false;
   
   constructor(private route: ActivatedRoute, private api: ApiService, private dialog: MatDialog, private snackBar: MatSnackBar) {}
@@ -371,6 +408,13 @@ export class AssetDetailComponent implements OnInit {
       this.api.getAssetById(+id).subscribe(data => this.asset = data);
       this.api.getAssetAssignments(+id).subscribe(data => this.assignments = data);
       this.api.getMaintenance(+id).subscribe(data => this.maintenance = data);
+      this.api.getAssetPassport(+id).subscribe(data => this.passport = data);
+    }
+  }
+
+  downloadPassportPdf() {
+    if(this.asset && this.asset.id) {
+      window.open(`${environment.apiUrl}/assets/${this.asset.id}/export/passport-pdf`, '_blank');
     }
   }
 
