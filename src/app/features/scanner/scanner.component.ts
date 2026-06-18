@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { BarcodeFormat } from '@zxing/library';
 import { ApiService } from '../../core/services/api.service';
+import { PublicAssetService } from '../public-asset/public-asset.service';
 
 @Component({
   selector: 'app-scanner',
@@ -89,7 +90,7 @@ export class ScannerComponent implements OnInit {
   currentDevice: MediaDeviceInfo | undefined;
   allowedFormats = [BarcodeFormat.QR_CODE];
 
-  constructor(private router: Router, private api: ApiService) {}
+  constructor(private router: Router, private api: ApiService, private publicAssetService: PublicAssetService) {}
 
   ngOnInit() {}
   
@@ -141,7 +142,7 @@ export class ScannerComponent implements OnInit {
       } else {
         // It's likely an alphanumeric assetCode like AST-XXXXX. 
         // We must fetch the numeric ID from the backend using the public endpoint.
-        this.api.getPublicAsset(assetIdStr).subscribe({
+        this.publicAssetService.getAssetDetails(assetIdStr).subscribe({
           next: (asset: any) => {
             if (asset && asset.id) {
                this.router.navigate(['/assets', asset.id]);
