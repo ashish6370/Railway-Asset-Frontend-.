@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { environment } from '../../../environments/environment';
 import { ApiService } from '../../core/services/api.service';
 import { AssignDialogComponent } from './assign-dialog.component';
@@ -16,7 +17,7 @@ import { AssignDialogComponent } from './assign-dialog.component';
 @Component({
   selector: 'app-asset-detail',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule, MatTabsModule, MatTableModule, MatIconModule, MatChipsModule, MatSnackBarModule],
+  imports: [CommonModule, MatCardModule, MatButtonModule, MatTabsModule, MatTableModule, MatIconModule, MatChipsModule, MatSnackBarModule, MatProgressBarModule],
   template: `
     <div class="page-header" *ngIf="asset">
       <div class="header-content">

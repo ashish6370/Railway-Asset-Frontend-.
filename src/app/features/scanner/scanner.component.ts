@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { BarcodeFormat } from '@zxing/library';
+import { ApiService } from '../../core/services/api.service';
 
 @Component({
   selector: 'app-scanner',
@@ -88,7 +89,7 @@ export class ScannerComponent implements OnInit {
   currentDevice: MediaDeviceInfo | undefined;
   allowedFormats = [BarcodeFormat.QR_CODE];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private api: ApiService) {}
 
   ngOnInit() {}
   
@@ -125,19 +126,33 @@ export class ScannerComponent implements OnInit {
       
       let assetIdStr = result.trim();
       
-      // If it's a URL (e.g. http://localhost:4200/public/assets/12), extract the last part
+      // If it's a URL (e.g. http://localhost:4200/public/assets/AST-1234), extract the last part
       if (assetIdStr.includes('/public/assets/')) {
         const parts = assetIdStr.split('/public/assets/');
         assetIdStr = parts[parts.length - 1];
       }
 
-      const assetId = parseInt(assetIdStr, 10);
-      
-      if (!isNaN(assetId)) {
-        this.scannerEnabled = false; // Stop camera before routing
-        this.router.navigate(['/assets', assetId]);
+      this.scannerEnabled = false; // Stop camera before routing or API call
+
+      // Try to parse it as a direct numeric ID first
+      const numericId = parseInt(assetIdStr, 10);
+      if (!isNaN(numericId) && assetIdStr === numericId.toString()) {
+        this.router.navigate(['/assets', numericId]);
       } else {
-        alert('Invalid QR Code Scanned: ' + result);
+        // It's likely an alphanumeric assetCode like AST-XXXXX. 
+        // We must fetch the numeric ID from the backend using the public endpoint.
+        this.api.getPublicAsset(assetIdStr).subscribe({
+          next: (asset: any) => {
+            if (asset && asset.id) {
+               this.router.navigate(['/assets', asset.id]);
+            } else {
+               alert('Asset not found for code: ' + assetIdStr);
+            }
+          },
+          error: () => {
+            alert('Invalid QR Code Scanned or Asset Not Found: ' + result);
+          }
+        });
       }
     }
   }
