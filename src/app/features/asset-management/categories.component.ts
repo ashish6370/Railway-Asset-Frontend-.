@@ -101,13 +101,13 @@ export class CategoriesComponent implements OnInit {
   }
 
   private getCategoryErrorMessage(err: any): string {
+    if (err?.status === 0) {
+      return 'Cannot connect to the backend. Please check that the Railway backend URL is correct and the service is running.';
+    }
+
     const backendMessage = err?.error?.error || err?.error?.message || err?.message;
     if (backendMessage) {
       return backendMessage;
-    }
-
-    if (err?.status === 0) {
-      return 'Cannot connect to the backend. Please check that the server is running.';
     }
 
     return 'Failed to add category. Please try again.';
