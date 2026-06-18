@@ -1,2 +1,2 @@
-/api/* https://railway-asset-management-system-production.up.railway.app/api/:splat 200
+/api/* https://railway-asset-management-production.up.railway.app/api/:splat 200
 /* /index.html 200
