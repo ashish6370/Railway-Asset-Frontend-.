@@ -24,7 +24,8 @@ export const routes: Routes = [
       { path: 'audits', loadComponent: () => import('./features/audits/audits.component').then(m => m.AuditsComponent) },
       { path: 'scanner', loadComponent: () => import('./features/scanner/scanner.component').then(m => m.ScannerComponent) },
       { path: 'analytics', loadComponent: () => import('./features/analytics/analytics.component').then(m => m.AnalyticsComponent) },
-      { path: 'reports', loadComponent: () => import('./features/reports/reports.component').then(m => m.ReportsComponent) }
+      { path: 'reports', loadComponent: () => import('./features/reports/reports.component').then(m => m.ReportsComponent) },
+      { path: 'settings', loadComponent: () => import('./features/settings/settings.component').then(m => m.SettingsComponent) }
     ]
   }
 ];
